@@ -35,7 +35,7 @@ class StudentController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ message: 'You should fill all fields.' });
+      return res.status(400).json({ error: 'You should fill all fields.' });
     }
 
     const studentExists = await Student.findOne({
