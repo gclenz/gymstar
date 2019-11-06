@@ -50,6 +50,26 @@ class PlanController {
 
     return res.json(plan);
   }
+
+  async delete(req, res) {
+    const planToDelete = req.body.title;
+
+    const checkIfPlanExists = await Plan.findOne({
+      where: { title: planToDelete },
+    });
+
+    if (!checkIfPlanExists) {
+      return res.status(400).json({ error: "This plan doesn't exist." });
+    }
+
+    const deletedPlan = await Plan.destroy({
+      where: { title: planToDelete },
+    });
+
+    return res.json({
+      message: `The ${planToDelete} plan was successful deleted.`,
+    });
+  }
 }
 
 export default new PlanController();
