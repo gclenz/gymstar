@@ -62,7 +62,7 @@ class PlanController {
       return res.status(400).json({ error: "This plan doesn't exist." });
     }
 
-    const deletedPlan = await Plan.destroy({
+    await Plan.destroy({
       where: { title: planToDelete },
     });
 
