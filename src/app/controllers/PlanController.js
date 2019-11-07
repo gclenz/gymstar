@@ -8,19 +8,63 @@ class PlanController {
     return res.json(plans);
   }
 
-  // async show(req, res) {
-  //   const planExists = await Plan.findOne({ where: { title: req.body.title } });
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      title: Yup.string().required(),
+      newTitle: Yup.string(),
+      duration: Yup.number()
+        .integer()
+        .positive(),
+      price: Yup.number().positive(),
+    });
 
-  //   if (!planExists) {
-  //     return res.status(401).json({ error: "Plan don't exist." });
-  //   }
+    if (!(await schema.isValid(req.body))) {
+      return res
+        .status(400)
+        .json({ error: "You should insert at least the plan's name." });
+    }
 
-  //   const plan = await Plan.findOne({
-  //     where: { title: req.body.title },
-  //   });
+    const plan = await Plan.findOne({ where: { title: req.body.title } });
 
-  //   return res.json(plan);
-  // }
+    if (!plan) {
+      return res.status(401).json({ error: "Plan doesn't exist." });
+    }
+
+    if (req.body.newTitle) {
+      const planNameInUse = await Plan.findOne({
+        where: { title: req.body.newTitle },
+      });
+
+      if (planNameInUse) {
+        return res.status(401).json({ error: 'Plan already exist.' });
+      }
+
+      const { newTitle: title, duration, price } = req.body;
+
+      await plan.update({
+        title,
+        duration,
+        price,
+      });
+
+      return res.json(plan);
+    }
+
+    const updatedPlan = await plan.update(req.body, {
+      where: { title: req.body.title },
+    });
+
+    // const updatedPlan = await Plan.update(
+    //   {
+    //     title,
+    //     duration,
+    //     price,
+    //   },
+    //   { where: { title: req.body.title } }
+    // );
+
+    return res.json(updatedPlan);
+  }
 
   async store(req, res) {
     const schema = Yup.object().shape({
