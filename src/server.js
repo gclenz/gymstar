@@ -2,7 +2,9 @@ import app from './app';
 
 import './database';
 
-const port = 3333;
+require('dotenv/config');
+
+const port = process.env.SERVER_PORT;
 
 app.listen(port, () => {
   console.log('The server is running...');
