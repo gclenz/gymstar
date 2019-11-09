@@ -54,15 +54,6 @@ class PlanController {
       where: { title: req.body.title },
     });
 
-    // const updatedPlan = await Plan.update(
-    //   {
-    //     title,
-    //     duration,
-    //     price,
-    //   },
-    //   { where: { title: req.body.title } }
-    // );
-
     return res.json(updatedPlan);
   }
 
