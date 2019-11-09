@@ -3,6 +3,8 @@ import { addMonths, parseISO } from 'date-fns';
 import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 import Student from '../models/Student';
+import Queue from '../../lib/Queue';
+import CancellationMail from '../jobs/CancellationMail';
 
 class EnrollmentController {
   async index(req, res) {
@@ -30,16 +32,17 @@ class EnrollmentController {
 
     const enrollmentData = req.body;
 
-    // Check if student exists
-    const studentExists = await Student.findByPk(enrollmentData.studentId);
+    const student = await Student.findByPk(enrollmentData.studentId);
 
-    if (!studentExists) {
+    // Check if student exists
+    if (!student) {
       return res.status(401).json({ error: "This student doesn't exist." });
     }
 
-    const planExists = await Plan.findByPk(enrollmentData.planId);
+    const plan = await Plan.findByPk(enrollmentData.planId);
 
-    if (!planExists) {
+    // Check if plan exists
+    if (!plan) {
       return res.status(401).json({ error: "This plan doesn't exist" });
     }
 
@@ -68,6 +71,13 @@ class EnrollmentController {
       start_date: startDate,
       end_date: endDate,
       price,
+    });
+
+    // Send email to student
+    await Queue.add(CancellationMail.key, {
+      student,
+      plan,
+      endDate,
     });
 
     return res.json(studentEnrollment);
