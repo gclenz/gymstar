@@ -6,6 +6,7 @@ import Student from '../app/models/Student';
 import Plan from '../app/models/Plan';
 import Enrollment from '../app/models/Enrollment';
 import Checkin from '../app/models/Checkin';
+import HelpOrder from '../app/models/HelpOrder';
 
 const connection = new Sequelize(dbConfig);
 
@@ -14,5 +15,6 @@ Student.init(connection);
 Plan.init(connection);
 Enrollment.init(connection);
 Checkin.init(connection);
+HelpOrder.init(connection);
 
 export default connection;
