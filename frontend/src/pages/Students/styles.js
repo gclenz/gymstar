@@ -57,3 +57,30 @@ export const Student = styled.tr`
   border-bottom: 1px solid #eee;
   padding: 1rem 0;
 `;
+
+export const Content = styled.div`
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
+  padding: 1rem;
+  width: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  input {
+    background-color: #eee;
+    box-shadow: none;
+    margin: 1rem;
+    max-width: 100%;
+  }
+`;

@@ -20,14 +20,14 @@ export default function Routes() {
 
       <Route path="/dashboard" component={Dashboard} isPrivate />
 
-      <Route path="/students" component={Students} isPrivate />
-      <Route path="/students/add" exact component={StudentAdd} isPrivate />
-      <Route path="/students/edit" exact component={StudentEdit} isPrivate />
+      <Route path="/students" exact component={Students} isPrivate />
+      <Route path="/students/add" component={StudentAdd} isPrivate />
+      <Route path="/students/edit" component={StudentEdit} isPrivate />
       <Route path="/plans" component={Plans} isPrivate />
       <Route path="/enrollments" component={Enrollments} isPrivate />
       <Route path="/helporders" component={HelpOrders} isPrivate />
 
-      <Route path="/" component={() => <h1>404</h1>} />
+      {/* <Route path="/" component={() => <h1>404</h1>} /> */}
     </Switch>
   );
 }
