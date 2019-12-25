@@ -100,6 +100,26 @@ class StudentController {
 
     return res.json(updatedData);
   }
+
+  async delete(req, res) {
+    const studentToDelete = req.body.id;
+
+    const checkIfStudentExists = await Student.findOne({
+      where: { id: studentToDelete },
+    });
+
+    if (!checkIfStudentExists) {
+      return res.status(400).json({ error: "This student doesn't exist." });
+    }
+
+    await Student.destroy({
+      where: { id: studentToDelete },
+    });
+
+    return res.json({
+      message: `The student was successful deleted.`,
+    });
+  }
 }
 
 export default new StudentController();
