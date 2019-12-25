@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
+import history from '../../services/history';
 
 import { Container, StudentList, Student } from './styles';
 
@@ -23,7 +24,9 @@ export default function Students() {
       <Container>
         <header>
           <h1>Students management</h1>
-          <button type="button">Add</button>
+          <button type="button" onClick={() => history.push('/students/add')}>
+            Add
+          </button>
           <input type="text" name="student" placeholder="Search student..." />
         </header>
         <StudentList>
