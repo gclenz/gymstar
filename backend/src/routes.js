@@ -35,7 +35,7 @@ routes.put('/users', UserController.update);
 routes.get('/students', StudentController.index);
 routes.put('/students', StudentController.update);
 routes.post('/students', StudentController.store);
-routes.delete('/students', StudentController.delete);
+routes.delete('/students/:id', StudentController.delete);
 
 routes.get('/plans', PlanController.index);
 routes.post('/plans', PlanController.store);

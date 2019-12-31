@@ -105,10 +105,10 @@ class StudentController {
   }
 
   async delete(req, res) {
-    const studentToDelete = req.body.id;
+    const { id } = req.params;
 
     const checkIfStudentExists = await Student.findOne({
-      where: { id: studentToDelete },
+      where: { id },
     });
 
     if (!checkIfStudentExists) {
@@ -116,7 +116,7 @@ class StudentController {
     }
 
     await Student.destroy({
-      where: { id: studentToDelete },
+      where: { id },
     });
 
     return res.json({
