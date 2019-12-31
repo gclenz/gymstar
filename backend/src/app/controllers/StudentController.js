@@ -18,6 +18,16 @@ class StudentController {
     return res.json(students);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const student = await Student.findOne({
+      where: { id },
+    });
+
+    res.json(student);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -78,7 +88,7 @@ class StudentController {
 
     // Check if student exists
     const studentExists = await Student.findOne({
-      where: { email: req.body.email },
+      where: { id: req.params.id },
     });
 
     if (!studentExists) {
@@ -86,12 +96,10 @@ class StudentController {
     }
 
     const student = await Student.findOne({
-      where: { email: req.body.email },
+      where: { id: req.params.id },
     });
 
-    const { name, newEmail, age, weight, height } = req.body;
-
-    const email = newEmail;
+    const { name, email, age, weight, height } = req.body;
 
     const updatedData = await student.update({
       name,
@@ -120,7 +128,7 @@ class StudentController {
     });
 
     return res.json({
-      message: `The student was successful deleted.`,
+      message: `The student was successfully deleted.`,
     });
   }
 }
