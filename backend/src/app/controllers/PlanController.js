@@ -8,10 +8,19 @@ class PlanController {
     return res.json(plans);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const plan = await Plan.findOne({
+      where: { id },
+    });
+
+    res.json(plan);
+  }
+
   async update(req, res) {
     const schema = Yup.object().shape({
-      title: Yup.string().required(),
-      newTitle: Yup.string(),
+      title: Yup.string(),
       duration: Yup.number()
         .integer()
         .positive(),
@@ -24,34 +33,26 @@ class PlanController {
         .json({ error: "You should insert at least the plan's name." });
     }
 
-    const plan = await Plan.findOne({ where: { title: req.body.title } });
+    const { id } = req.params;
+
+    const plan = await Plan.findOne({ where: { id } });
 
     if (!plan) {
       return res.status(401).json({ error: "Plan doesn't exist." });
     }
 
-    if (req.body.newTitle) {
+    if (req.body.title !== plan.title) {
       const planNameInUse = await Plan.findOne({
-        where: { title: req.body.newTitle },
+        where: { title: req.body.title },
       });
 
       if (planNameInUse) {
-        return res.status(401).json({ error: 'Plan already exist.' });
+        return res.status(401).json({ error: 'Plan name already in use.' });
       }
-
-      const { newTitle: title, duration, price } = req.body;
-
-      await plan.update({
-        title,
-        duration,
-        price,
-      });
-
-      return res.json(plan);
     }
 
     const updatedPlan = await plan.update(req.body, {
-      where: { title: req.body.title },
+      where: { id },
     });
 
     return res.json(updatedPlan);
@@ -87,22 +88,22 @@ class PlanController {
   }
 
   async delete(req, res) {
-    const planToDelete = req.body.title;
+    const { id } = req.params;
 
-    const checkIfPlanExists = await Plan.findOne({
-      where: { title: planToDelete },
+    const plan = await Plan.findOne({
+      where: { id },
     });
 
-    if (!checkIfPlanExists) {
+    if (!plan) {
       return res.status(400).json({ error: "This plan doesn't exist." });
     }
 
     await Plan.destroy({
-      where: { title: planToDelete },
+      where: { id },
     });
 
     return res.json({
-      message: `The ${planToDelete} plan was successful deleted.`,
+      message: `The ${plan.title} plan was successful deleted.`,
     });
   }
 }
