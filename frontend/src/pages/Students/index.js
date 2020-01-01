@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../../services/api';
 import history from '../../services/history';
 
@@ -7,17 +9,25 @@ import { Container, StudentList, Student } from './styles';
 export default function Students() {
   const [students, setStudents] = useState([]);
 
+  async function loadStudents() {
+    const response = await api.get('/students');
+
+    console.tron.log(response.data);
+
+    setStudents(response.data);
+  }
+
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('students');
-
-      console.tron.log(response.data);
-
-      setStudents(response.data);
-    }
-
     loadStudents();
   }, []);
+
+  async function deleteStudent(id) {
+    console.tron.log(id);
+    await api.delete(`/students/${id}`);
+
+    toast.success(`Student deleted with success.`);
+    loadStudents();
+  }
 
   return (
     <>
@@ -46,10 +56,15 @@ export default function Students() {
                 <td>{student.email}</td>
                 <td>{student.age}</td>
                 <td>
-                  <button type="button">Edit</button>
+                  <Link to={`/students/edit/${student.id}`}>Edit</Link>
                 </td>
                 <td>
-                  <button type="button">Delete</button>
+                  <button
+                    type="button"
+                    onClick={() => deleteStudent(student.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </Student>
             ))}

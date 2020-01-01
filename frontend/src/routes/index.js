@@ -10,6 +10,8 @@ import Students from '../pages/Students';
 import StudentAdd from '../pages/Students/Add';
 import StudentEdit from '../pages/Students/Edit';
 import Plans from '../pages/Plans';
+import PlanAdd from '../pages/Plans/Add';
+import PlanEdit from '../pages/Plans/Edit';
 import Enrollments from '../pages/Enrollments';
 import HelpOrders from '../pages/HelpOrders';
 
@@ -22,10 +24,16 @@ export default function Routes() {
 
       <Route path="/students" exact component={Students} isPrivate />
       <Route path="/students/add" component={StudentAdd} isPrivate />
-      <Route path="/students/edit" component={StudentEdit} isPrivate />
-      <Route path="/plans" component={Plans} isPrivate />
-      <Route path="/enrollments" component={Enrollments} isPrivate />
-      <Route path="/helporders" component={HelpOrders} isPrivate />
+      <Route
+        path="/students/edit/:studentId"
+        component={StudentEdit}
+        isPrivate
+      />
+      <Route path="/plans" exact component={Plans} isPrivate />
+      <Route path="/plans/add" exact component={PlanAdd} isPrivate />
+      <Route path="/plans/edit/:planId" component={PlanEdit} isPrivate />
+      <Route path="/enrollments" exact component={Enrollments} isPrivate />
+      <Route path="/helporders" exact component={HelpOrders} isPrivate />
 
       {/* <Route path="/" component={() => <h1>404</h1>} /> */}
     </Switch>

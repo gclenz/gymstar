@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 import { Container, PlanList, Plan } from './styles';
@@ -6,22 +8,29 @@ import { Container, PlanList, Plan } from './styles';
 export default function Students() {
   const [plans, setPlans] = useState([]);
 
+  async function loadPlans() {
+    const response = await api.get('/plans');
+
+    setPlans(response.data);
+  }
+
   useEffect(() => {
-    async function loadPlans() {
-      const response = await api.get('/plans');
-
-      setPlans(response.data);
-    }
-
     loadPlans();
   }, []);
+
+  async function deletePlan(id) {
+    await api.delete(`/plans/${id}`);
+
+    toast.success(`Plan deleted with success.`);
+    loadPlans();
+  }
 
   return (
     <>
       <Container>
         <header>
           <h1>Plans management</h1>
-          <button type="button">Add</button>
+          <Link to="/plans/add">Add</Link>
         </header>
         <PlanList>
           <thead>
@@ -40,10 +49,12 @@ export default function Students() {
                 <td>{plan.duration}</td>
                 <td>{plan.price}</td>
                 <td>
-                  <button type="button">Edit</button>
+                  <Link to={`/plans/edit/${plan.id}`}>Edit</Link>
                 </td>
                 <td>
-                  <button type="button">Delete</button>
+                  <button type="button" onClick={() => deletePlan(plan.id)}>
+                    Delete
+                  </button>
                 </td>
               </Plan>
             ))}

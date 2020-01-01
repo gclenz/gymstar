@@ -40,8 +40,8 @@ export default function Students() {
             Go back
           </button>
         </header>
-        <Content schema={schema}>
-          <Form onSubmit={createUser}>
+        <Content>
+          <Form schema={schema} onSubmit={createUser}>
             <Input name="name" placeholder="Full name" />
             <br />
             <Input name="email" type="email" placeholder="Email" />
