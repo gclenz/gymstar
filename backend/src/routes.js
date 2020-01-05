@@ -21,6 +21,7 @@ routes.post('/users', UserController.store);
 
 routes.post('/sessions', SessionController.store);
 
+routes.get('/students/:id', StudentController.show);
 routes.get('/students/:id/checkins', CheckinController.index);
 routes.post('/students/:id/checkins', CheckinController.store);
 
@@ -33,7 +34,6 @@ routes.get('/users', UserController.index);
 routes.put('/users', UserController.update);
 
 routes.get('/students', StudentController.index);
-routes.get('/students/:id', StudentController.show);
 routes.put('/students/:id', StudentController.update);
 routes.post('/students', StudentController.store);
 routes.delete('/students/:id', StudentController.delete);
