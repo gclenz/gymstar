@@ -22,6 +22,16 @@ class HelpOrderController {
     return res.json(helpOrders);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const helpOrder = await HelpOrder.findOne({
+      where: { id },
+    });
+
+    return res.json(helpOrder);
+  }
+
   async store(req, res) {
     const studentId = req.params.id;
 

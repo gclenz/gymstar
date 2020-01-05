@@ -25,6 +25,7 @@ routes.get('/students/:id', StudentController.show);
 routes.get('/students/:id/checkins', CheckinController.index);
 routes.post('/students/:id/checkins', CheckinController.store);
 
+routes.get('/helporders/:id', HelpOrderController.show);
 routes.get('/students/:id/helporders', HelpOrderController.index);
 routes.post('/students/:id/helporders', HelpOrderController.store);
 
