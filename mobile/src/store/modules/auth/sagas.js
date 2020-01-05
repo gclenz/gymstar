@@ -1,20 +1,22 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { Alert } from 'react-native';
 import api from '../../../services/api';
 
-import { signInSuccess } from './actions';
+import { signInSuccess, signInFailure } from './actions';
 
 export function* signIn({ payload }) {
-  const { id } = payload;
+  try {
+    const { id } = payload;
 
-  const response = yield call(api.get, `/students/${id}`);
+    const response = yield call(api.get, `/students/${id}`);
 
-  if (!response.data) {
-    console.tron.error('Student not found');
+    const { id: student_id } = response.data;
+
+    yield put(signInSuccess(student_id));
+  } catch (error) {
+    Alert.alert('Sign in failure', 'Check your student ID');
+    yield put(signInFailure());
   }
-
-  const { id: student_id } = response.data;
-
-  yield put(signInSuccess(student_id));
 }
 
 export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);

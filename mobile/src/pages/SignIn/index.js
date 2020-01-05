@@ -17,6 +17,7 @@ export default function SignIn() {
 
   async function handleSubmit() {
     dispatch(signInRequest(id));
+    setId();
   }
 
   return (
