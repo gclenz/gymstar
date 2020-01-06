@@ -59,16 +59,29 @@ export default function Students({ match }) {
         </header>
         <Content>
           <Form schema={schema} onSubmit={editUser} initialData={student}>
-            <Input type="text" name="name" placeholder="Full name" />
-            <br />
-            <Input name="email" type="email" placeholder="Email" />
-            <br />
             <div>
-              <Input type="text" name="age" placeholder="Age" />
-              <Input type="text" name="weight" placeholder="Weight" />
-              <Input type="text" name="height" placeholder="Height" />
-              <button type="submit">Edit</button>
+              <p>Name</p>
+              <Input type="text" name="name" placeholder="Full name" />
             </div>
+            <div>
+              <p>Email</p>
+              <Input name="email" type="email" placeholder="Email" />
+            </div>
+            <section>
+              <div>
+                <p>Age</p>
+                <Input type="text" name="age" placeholder="Age" />
+              </div>
+              <div>
+                <p>Weight</p>
+                <Input type="text" name="weight" placeholder="Weight" />
+              </div>
+              <div>
+                <p>Height</p>
+                <Input type="text" name="height" placeholder="Height" />
+              </div>
+            </section>
+            <button type="submit">Edit</button>
           </Form>
         </Content>
       </Container>

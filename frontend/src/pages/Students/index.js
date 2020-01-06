@@ -37,7 +37,6 @@ export default function Students() {
           <button type="button" onClick={() => history.push('/students/add')}>
             Add
           </button>
-          <input type="text" name="student" placeholder="Search student..." />
         </header>
         <StudentList>
           <thead>

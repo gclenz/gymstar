@@ -39,14 +39,21 @@ export default function Students() {
         </header>
         <Content>
           <Form schema={schema} onSubmit={createPlan}>
-            <Input name="title" placeholder="Plan title" />
-            <br />
             <div>
-              <Input name="duration" placeholder="Duration" />
-              <Input name="price" placeholder="Price/month" />
-              <Input name="totalprice" />
-              <button type="submit">Create</button>
+              <p>Title</p>
+              <Input name="title" placeholder="Plan title" />
             </div>
+            <section>
+              <div>
+                <p>Duration</p>
+                <Input name="duration" placeholder="Duration" />
+              </div>
+              <div>
+                <p>Price/month</p>
+                <Input name="price" placeholder="Price/month" />
+              </div>
+            </section>
+            <button type="submit">Edit</button>
           </Form>
         </Content>
       </Container>

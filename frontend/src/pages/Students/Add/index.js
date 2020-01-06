@@ -42,16 +42,30 @@ export default function Students() {
         </header>
         <Content>
           <Form schema={schema} onSubmit={createUser}>
-            <Input name="name" placeholder="Full name" />
-            <br />
-            <Input name="email" type="email" placeholder="Email" />
-            <br />
             <div>
-              <Input name="age" placeholder="Age" />
-              <Input name="weight" placeholder="Weight" />
-              <Input name="height" placeholder="Height" />
-              <button type="submit">Create</button>
+              <p>Name</p>
+              <Input name="name" placeholder="Full name" />
             </div>
+            <div>
+              <p>Email</p>
+              <Input name="email" type="email" placeholder="Email" />
+            </div>
+
+            <section>
+              <div>
+                <p>Age</p>
+                <Input name="age" placeholder="Age" />
+              </div>
+              <div>
+                <p>Weight</p>
+                <Input name="weight" placeholder="Weight" />
+              </div>
+              <div>
+                <p>Height</p>
+                <Input name="height" placeholder="Height" />
+              </div>
+            </section>
+            <button type="submit">Create</button>
           </Form>
         </Content>
       </Container>

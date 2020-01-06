@@ -25,6 +25,21 @@ export const Container = styled.div`
     }
   }
 
+  a {
+    background-color: #8d80ef;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem;
+    transition: background-color 0.5s;
+
+    &:hover {
+      background-color: ${darken(0.05, '#8d80ef')};
+    }
+  }
+
   button {
     background-color: #8d80ef;
     border: none;
@@ -74,6 +89,18 @@ export const Content = styled.div`
       flex-direction: row;
       flex-wrap: wrap;
       max-width: 100%;
+    }
+
+    section {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 2;
+      justify-content: space-between;
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 

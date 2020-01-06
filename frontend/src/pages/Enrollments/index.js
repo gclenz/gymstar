@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
 import { MdBlock, MdCheck } from 'react-icons/md';
 import api from '../../services/api';
@@ -7,15 +8,31 @@ import { Container, EnrollmentList, Enrollment } from './styles';
 
 export default function Students() {
   const [enrollments, setEnrollments] = useState([]);
+  const [plans, setPlans] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  async function loadEnrollments() {
+    const response = await api.get('/enrollments');
+
+    setEnrollments(response.data);
+  }
+
+  async function loadStudents() {
+    const response = await api.get('/students');
+
+    setStudents(response.data);
+  }
+
+  async function loadPlans() {
+    const response = await api.get('/plans');
+
+    setPlans(response.data);
+  }
 
   useEffect(() => {
-    async function loadEnrollments() {
-      const response = await api.get('/enrollments');
-
-      setEnrollments(response.data);
-    }
-
     loadEnrollments();
+    loadStudents();
+    loadPlans();
   }, []);
 
   return (
@@ -23,7 +40,7 @@ export default function Students() {
       <Container>
         <header>
           <h1>Enrollments management</h1>
-          <button type="button">Add</button>
+          <Link to="/enrollments/add">Add</Link>
         </header>
         <EnrollmentList>
           <thead>
@@ -56,7 +73,7 @@ export default function Students() {
                   )}
                 </td>
                 <td>
-                  <button type="button">Edit</button>
+                  <Link to={`/enrollments/edit/${enrollment.id}`}>Edit</Link>
                 </td>
                 <td>
                   <button type="button">Delete</button>

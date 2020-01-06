@@ -6,6 +6,22 @@ export const Container = styled.div`
   min-height: 300px;
   margin: 2rem auto;
 
+  a {
+    background-color: #8d80ef;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: bold;
+    padding: 0.75rem;
+    transition: background-color 0.5s;
+
+    &:hover {
+      background-color: ${darken(0.05, '#8d80ef')};
+    }
+  }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -25,22 +41,6 @@ export const Container = styled.div`
     }
   }
 
-  a {
-    background-color: #8d80ef;
-    border: none;
-    border-radius: 0.25rem;
-    box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
-    color: #fff;
-    font-size: 0.84rem;
-    font-weight: bold;
-    padding: 0.75rem;
-    transition: background-color 0.5s;
-
-    &:hover {
-      background-color: ${darken(0.05, '#8d80ef')};
-    }
-  }
-
   button {
     background-color: #8d80ef;
     border: none;
@@ -57,7 +57,7 @@ export const Container = styled.div`
   }
 `;
 
-export const StudentList = styled.table`
+export const EnrollmentList = styled.table`
   background-color: #fff;
   border-radius: 0.25rem;
   box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
@@ -69,7 +69,7 @@ export const StudentList = styled.table`
   }
 `;
 
-export const Student = styled.tr`
+export const Enrollment = styled.tr`
   border-bottom: 1px solid #eee;
   padding: 1rem 0;
 `;
@@ -78,6 +78,7 @@ export const Content = styled.div`
   background-color: #fff;
   border-radius: 0.25rem;
   box-shadow: 0px 4px 5px rgba(125, 125, 125, 0.1);
+  min-height: 300px;
   padding: 1rem;
   width: 100%;
 
@@ -85,21 +86,30 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
 
-    div {
+    section {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      max-width: 100%;
+      width: 100%;
+      margin-bottom: 1rem;
     }
 
-    section {
+    .form {
       display: flex;
       flex-direction: row;
-      flex-grow: 3;
-    }
+      flex-grow: 4;
+      flex-shrink: 0;
+      justify-content: space-between;
 
-    button {
-      flex: 1;
+      input {
+        height: 50px;
+        margin-left: 0;
+        max-width: 125px;
+      }
+
+      button {
+        flex: 1;
+      }
     }
   }
 

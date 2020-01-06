@@ -52,14 +52,25 @@ export default function Plans({ match }) {
         </header>
         <Content>
           <Form schema={schema} onSubmit={editPlan} initialData={plan}>
-            <Input name="title" placeholder="Plan title" />
-            <br />
             <div>
-              <Input name="duration" placeholder="Duration" />
-              <Input name="price" placeholder="Price/month" />
-              <Input name="totalprice" />
-              <button type="submit">Edit</button>
+              <p>Title</p>
+              <Input name="title" placeholder="Plan title" />
             </div>
+            <section>
+              <div>
+                <p>Duration</p>
+                <Input name="duration" placeholder="Duration" />
+              </div>
+              <div>
+                <p>Price/month</p>
+                <Input name="price" placeholder="Price/month" />
+              </div>
+              <div>
+                <p>Total price</p>
+                <Input value={plan.price * plan.duration} name="totalprice" />
+              </div>
+            </section>
+            <button type="submit">Edit</button>
           </Form>
         </Content>
       </Container>
