@@ -46,8 +46,9 @@ routes.put('/plans/:id', PlanController.update);
 routes.delete('/plans/:id', PlanController.delete);
 
 routes.get('/enrollments', EnrollmentController.index);
+routes.get('/enrollments/:id', EnrollmentController.show);
 routes.post('/enrollments', EnrollmentController.store);
-routes.put('/enrollments', EnrollmentController.update);
+routes.put('/enrollments/:id', EnrollmentController.update);
 routes.delete('/enrollments', EnrollmentController.delete);
 
 routes.get('/helporders', AnswerHelpOrderController.index);

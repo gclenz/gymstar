@@ -13,6 +13,16 @@ class EnrollmentController {
     return res.json(enrollments);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findOne({
+      where: { id },
+    });
+
+    return res.json(enrollment);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       studentId: Yup.number()
@@ -99,12 +109,6 @@ class EnrollmentController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      enrollmentId: Yup.number()
-        .integer()
-        .positive()
-        .required(),
-      newEndDate: Yup.date(),
-      newPrice: Yup.number().positive(),
       newPlanId: Yup.number()
         .integer()
         .positive(),
@@ -114,18 +118,18 @@ class EnrollmentController {
       return res.status(400).json({ error: 'You should fill all fields.' });
     }
 
-    const { newEndDate, newPlanId, newPrice } = req.body;
-    const enrollment = await Enrollment.findByPk(req.body.enrollmentId);
+    const { id } = req.params;
 
-    if (newEndDate === enrollment.end_date) {
-      return res.status(400).json({
-        error: "You can't change enrollment's expire date to the same one.",
-      });
+    const { newPlanId } = req.body;
+    const enrollment = await Enrollment.findByPk(id);
+
+    if (!enrollment) {
+      return res.status(401).json({ error: "This enrollment doesn't exist." });
     }
 
-    const planExists = await Plan.findByPk(newPlanId);
+    const plan = await Plan.findByPk(newPlanId);
 
-    if (!planExists) {
+    if (!plan) {
       return res.status(401).json({ error: "This plan doesn't exist." });
     }
 
@@ -135,11 +139,10 @@ class EnrollmentController {
       });
     }
 
-    if (newPrice === enrollment.price) {
-      return res.status(400).json({
-        error: "You can't change enrollment's price to the same one.",
-      });
-    }
+    const newPrice =
+      Number(enrollment.price) + Number(plan.price) * Number(plan.duration);
+
+    const newEndDate = addMonths(enrollment.end_date, plan.duration);
 
     await enrollment.update({
       plan_id: newPlanId,
